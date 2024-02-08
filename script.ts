@@ -64,17 +64,17 @@ const rule = (particles1: any, particles2: any, g: number, range: number) => {
 let yellow: {x: number, y: number, vx: number, vy: number, color: string}[] = create(2500, 'yellow')
 let red: {x: number, y: number, vx: number, vy: number, color: string}[] = create(1000, 'red')
 let white: {x: number, y: number, vx: number, vy: number, color: string}[] = create(1000, 'white')
-let blue: {x: number, y: number, vx: number, vy: number, color: string}[] = create(1500, 'rgb(0,215,255)')
+let blue: {x: number, y: number, vx: number, vy: number, color: string}[] = create(1000, 'rgb(0,215,255)')
 
 const update = () => {
 	rule(red, red, 0.8, 100)
 	rule(red, white, 0.1, 100)
-	rule(yellow, red, 2.9, 93)
-	rule(yellow, red, -3.5, 70)
+	rule(yellow, red, 2.9, 120)
+	rule(yellow, red, -5.5, 100)
 	rule(yellow, yellow, -0.3, 12)
-	rule(white, white, -0.9, 10)
+	rule(white, white, -0.9, 20)
 	/*	rule(blue, red, -0.2, 2)*/
-	rule(white, red, 0.3, 70)
+	rule(white, red, 0.9, 70)
 	rule(blue, red, 2.9, 90)
 	rule(blue, red, -3.5, 34)
 	rule(blue, blue, -3.5, 10)

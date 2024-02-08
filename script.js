@@ -53,15 +53,15 @@ const rule = (particles1, particles2, g, range) => {
 let yellow = create(2500, 'yellow');
 let red = create(1000, 'red');
 let white = create(1000, 'white');
-let blue = create(1500, 'rgb(0,215,255)');
+let blue = create(1000, 'rgb(0,215,255)');
 const update = () => {
     rule(red, red, 0.8, 100);
     rule(red, white, 0.1, 100);
-    rule(yellow, red, 2.9, 93);
-    rule(yellow, red, -3.5, 70);
+    rule(yellow, red, 2.9, 120);
+    rule(yellow, red, -5.5, 100);
     rule(yellow, yellow, -0.3, 12);
-    rule(white, white, -0.9, 10);
-    rule(white, red, 0.3, 70);
+    rule(white, white, -0.9, 20);
+    rule(white, red, 0.9, 70);
     rule(blue, red, 2.9, 90);
     rule(blue, red, -3.5, 34);
     rule(blue, blue, -3.5, 10);
