@@ -1,0 +1,9 @@
+* {
+    overflow: hidden;
+    margin: 0;
+    image-rendering: pixelated;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}

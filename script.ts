@@ -2,6 +2,9 @@ const canvas = document.getElementById('canvas') as HTMLCanvasElement
 const ctx = canvas.getContext('2d')
 const particles: any[] = []
 
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
 function draw(x: number, y: number, c: string, s: number): void {
 	// @ts-ignore
 	ctx.fillStyle = c
@@ -14,7 +17,7 @@ const particle = (x: number, y: number, c: string) => {
 }
 
 const random = () => {
-	return Math.random() * 900 + 50
+	return Math.random() * canvas.width + 50
 }
 
 const create = (number: number, color: string) => {
@@ -49,46 +52,52 @@ const rule = (particles1: any, particles2: any, g: number, range: number) => {
 		a.vy = (a.vy + fy) * 0.9
 		a.x += a.vx
 		a.y += a.vy
-		if (a.x <= 0 || a.x >= 1000) {
+		if (a.x <= 0 || a.x >= canvas.width) {
 			a.vx *= -1
 		}
-		if (a.y <= 0 || a.y >= 1000) {
+		if (a.y <= 0 || a.y >= canvas.height) {
 			a.vy *= -1
 		}
 	}
 }
 
-let yellow = create(800, 'yellow')
-let red = create(200, 'red')
-let white = create(1000, 'white')
-let blue = create(1000, 'blue')
+let yellow: {x: number, y: number, vx: number, vy: number, color: string}[] = create(2500, 'yellow')
+let red: {x: number, y: number, vx: number, vy: number, color: string}[] = create(1000, 'red')
+let white: {x: number, y: number, vx: number, vy: number, color: string}[] = create(1000, 'white')
+let blue: {x: number, y: number, vx: number, vy: number, color: string}[] = create(1500, 'rgb(0,215,255)')
 
 const update = () => {
-	rule(red, red, 0.2, 100)
+	rule(red, red, 0.8, 100)
 	rule(red, white, 0.1, 100)
 	rule(yellow, red, 2.9, 93)
 	rule(yellow, red, -3.5, 70)
 	rule(yellow, yellow, -0.3, 12)
-	rule(white, white, 0.1, 10)
-	rule(white, white, -0.9, 5)
+	rule(white, white, -0.9, 10)
 	/*	rule(blue, red, -0.2, 2)*/
-	rule(white, red, 0.1, 70)
-	rule(blue, red, -0.5, 80)
-	rule(blue, blue, -0.01, 10)
+	rule(white, red, 0.3, 70)
+	rule(blue, red, 2.9, 90)
+	rule(blue, red, -3.5, 34)
+	rule(blue, blue, -3.5, 10)
+/*	rule(blue, red, -10, 80)
+	rule(blue, blue, -0.01, 10)*/
 	/*	rule(blue, red, -1.4, 10)*/
 	/*        rule(red, red, 1)
 			rule(red, yellow, -0.1)
 			rule(yellow, red, -0.1)*/
 	// @ts-ignore
-	ctx.clearRect(0, 0, 1000, 1000)
+	ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-	draw(0, 0, 'rgb(14,14,14)', 1000)
+	draw(0, 0, 'rgb(0,0,0)', canvas.width)
 
 	for (let i = 0; i < particles.length; i++) {
-		draw(particles[i].x, particles[i].y, particles[i].color, 3)
+		draw(particles[i].x, particles[i].y, particles[i].color, 1)
 	}
 
-	requestAnimationFrame(update)
+	/*requestAnimationFrame(update)*/
 }
 
-update()
+setInterval(update, 36)
+window.addEventListener('resize', () => {
+	canvas.width = window.innerWidth;
+	canvas.height = window.innerHeight;
+});
