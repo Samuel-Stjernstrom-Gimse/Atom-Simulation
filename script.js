@@ -58,17 +58,17 @@ const update = () => {
     rule(red, red, 0.8, 100);
     rule(red, white, 0.1, 100);
     rule(yellow, red, 2.9, 120);
-    rule(yellow, red, -5.5, 100);
+    rule(yellow, red, -5.5, 60);
     rule(yellow, yellow, -0.3, 12);
     rule(white, white, -0.9, 20);
-    rule(white, red, 0.9, 70);
+    rule(white, red, 0.9, 300);
     rule(blue, red, 2.9, 90);
     rule(blue, red, -3.5, 34);
     rule(blue, blue, -3.5, 10);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     draw(0, 0, 'rgb(0,0,0)', canvas.width);
     for (let i = 0; i < particles.length; i++) {
-        draw(particles[i].x, particles[i].y, particles[i].color, 1);
+        draw(particles[i].x, particles[i].y, particles[i].color, 2);
     }
 };
 setInterval(update, 36);
