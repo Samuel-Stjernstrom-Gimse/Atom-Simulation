@@ -13,109 +13,125 @@
     <!-- Particle 1 Structure -->
     <div class="particle-container">
         <h2 id="name-particle1">number 1</h2>
-        <input id="input-number1" type="number" placeholder="count"/>
-        <input id="input-color1" type="color" />
+        <input class="input-range" id="input-number1" value="1000" type="number" placeholder="count" />
+        <input class="input-range" id="input-color1" value="#ff00ff" type="color" />
 
         <!-- Attraction/Repulsion for Particle 1 -->
         <div>
             <h2>particle1 -> particle1</h2>
-            <button id="particle1-particle1">Repulsion/Attraction</button>
-            <input id="particle1-particle1-range" type="number" placeholder="range">
-            <input id="particle1-particle1-force" type="number" placeholder="force">
+            <label class="switch">
+                <input class="input-range" id="particle1-particle1" type="checkbox">
+                <span class="slider round"></span>
+            </label>
+            <input class="input-range" id="particle1-particle1-range" value="50" type="range" min="0" max="100" placeholder="range">
+            <input class="input-range" id="particle1-particle1-force" value="5" type="range" min="0" max="100" placeholder="force">
         </div>
 
         <!-- Attraction/Repulsion for Particle 1 -> Particle 2 -->
         <div>
             <h2>particle1 -> particle2</h2>
-            <button id="particle1-particle2-attract">Attraction</button>
-            <button id="particle1-particle2-push">Repulsion</button>
-            <input id="particle1-particle2-range" type="number" placeholder="range">
-            <input id="particle1-particle2-force" type="number" placeholder="force">
+            <label class="switch">
+                <input class="input-range" id="particle1-particle2-attract" type="checkbox">
+                <span class="slider round"></span>
+            </label>
+            <input class="input-range" id="particle1-particle2-range" type="range" min="0" max="100" placeholder="range">
+            <input class="input-range" id="particle1-particle2-force" type="range" min="0" max="100" placeholder="force">
         </div>
 
         <!-- Attraction/Repulsion for Particle 1 -> Particle 3 -->
         <div>
             <h2>particle1 -> particle3</h2>
-            <button id="particle1-particle3-attract">Attraction</button>
-            <button id="particle1-particle3-push">Repulsion</button>
-            <input id="particle1-particle3-range" type="number" placeholder="range">
-            <input id="particle1-particle3-force" type="number" placeholder="force">
+            <label class="switch">
+                <input class="input-range" id="particle1-particle3-attract" type="checkbox">
+                <span class="slider round"></span>
+            </label>
+            <input class="input-range" id="particle1-particle3-range" type="range" min="0" max="100" placeholder="range">
+            <input class="input-range" id="particle1-particle3-force" type="range" min="0" max="100" placeholder="force">
         </div>
     </div>
 
     <!-- Particle 2 Structure -->
     <div class="particle-container">
         <h2 id="name-particle2">number 2</h2>
-        <input id="input-number2" type="number" placeholder="count"/>
-        <input id="input-color2" type="color" />
+        <input class="input-range" id="input-number2" value="1000" type="number" placeholder="count" />
+        <input class="input-range" id="input-color2" value="#00ff00" type="color" />
 
         <!-- Attraction/Repulsion for Particle 2 -->
         <div>
             <h2>particle2 -> particle2</h2>
-            <button id="particle2-particle2">Repulsion/Attraction</button>
-            <input id="particle2-particle2-range" type="number" placeholder="range">
-            <input id="particle2-particle2-force" type="number" placeholder="force">
+            <label class="switch">
+                <input class="input-range" id="particle2-particle2" type="checkbox">
+                <span class="slider round"></span>
+            </label>
+            <input class="input-range" id="particle2-particle2-range" value="50" type="range" min="0" max="100" placeholder="range">
+            <input class="input-range" id="particle2-particle2-force" value="5" type="range" min="0" max="100" placeholder="force">
         </div>
 
         <!-- Attraction/Repulsion for Particle 2 -> Particle 1 -->
         <div>
             <h2>particle2 -> particle1</h2>
-            <button id="particle2-particle1-attract">Attraction</button>
-            <button id="particle2-particle1-push">Repulsion</button>
-            <input id="particle2-particle1-range" type="number" placeholder="range">
-            <input id="particle2-particle1-force" type="number" placeholder="force">
+            <label class="switch">
+                <input class="input-range" id="particle2-particle1-attract" type="checkbox">
+                <span class="slider round"></span>
+            </label>
+            <input class="input-range" id="particle2-particle1-range" type="range" min="0" max="100" placeholder="range">
+            <input class="input-range" id="particle2-particle1-force" type="range" min="0" max="100" placeholder="force">
         </div>
 
         <!-- Attraction/Repulsion for Particle 2 -> Particle 3 -->
         <div>
             <h2>particle2 -> particle3</h2>
-            <button id="particle2-particle3-attract">Attraction</button>
-            <button id="particle2-particle3-push">Repulsion</button>
-            <input id="particle2-particle3-range" type="number" placeholder="range">
-            <input id="particle2-particle3-force" type="number" placeholder="force">
+            <label class="switch">
+                <input class="input-range" id="particle2-particle3-attract" type="checkbox">
+                <span class="slider round"></span>
+            </label>
+            <input class="input-range" id="particle2-particle3-range" type="range" min="0" max="100" placeholder="range">
+            <input class="input-range" id="particle2-particle3-force" type="range" min="0" max="100" placeholder="force">
         </div>
     </div>
 
     <!-- Particle 3 Structure -->
     <div class="particle-container">
         <h2 id="name-particle3">number 3</h2>
-        <input id="input-number3" type="number" placeholder="count"/>
-        <input id="input-color3" type="color" />
+        <input class="input-range" id="input-number3" value="1000" type="number" placeholder="count" />
+        <input class="input-range" id="input-color3" value="#ffaa00" type="color" />
 
         <!-- Attraction/Repulsion for Particle 3 -->
         <div>
             <h2>particle3 -> particle3</h2>
-            <button id="particle3-particle3">Repulsion/Attraction</button>
-            <input id="particle3-particle3-range" type="number" placeholder="range">
-            <input id="particle3-particle3-force" type="number" placeholder="force">
+            <label class="switch">
+                <input class="input-range" id="particle3-particle3" type="checkbox">
+                <span class="slider round"></span>
+            </label>
+            <input class="input-range" id="particle3-particle3-range" value="50" type="range" min="0" max="100" placeholder="range">
+            <input class="input-range" id="particle3-particle3-force" value="5" type="range" min="0" max="100" placeholder="force">
         </div>
 
         <!-- Attraction/Repulsion for Particle 3 -> Particle 1 -->
         <div>
             <h2>particle3 -> particle1</h2>
-            <button id="particle3-particle1-attract">Attraction</button>
-            <button id="particle3-particle1-push">Repulsion</button>
-            <input id="particle3-particle1-range" type="number" placeholder="range">
-            <input id="particle3-particle1-force" type="number" placeholder="force">
+            <label class="switch">
+                <input class="input-range" id="particle3-particle1-attract" type="checkbox">
+                <span class="slider round"></span>
+            </label>
+            <input class="input-range" id="particle3-particle1-range" type="range" min="0" max="100" placeholder="range">
+            <input class="input-range" id="particle3-particle1-force" type="range" min="0" max="100" placeholder="force">
         </div>
 
         <!-- Attraction/Repulsion for Particle 3 -> Particle 2 -->
         <div>
             <h2>particle3 -> particle2</h2>
-            <button id="particle3-particle2-attract">Attraction</button>
-            <button id="particle3-particle2-push">Repulsion</button>
-            <input id="particle3-particle2-range" type="number" placeholder="range">
-            <input id="particle3-particle2-force" type="number" placeholder="force">
+            <label class="switch">
+                <input class="input-range" id="particle3-particle2-attract" type="checkbox">
+                <span class="slider round"></span>
+            </label>
+            <input class="input-range" id="particle3-particle2-range" type="range" min="0" max="100" placeholder="range">
+            <input class="input-range" id="particle3-particle2-force" type="range" min="0" max="100" placeholder="force">
         </div>
     </div>
-
-
-
 </div>
-<canvas id="canvas" ></canvas>
-<script src="script.js">
-
-</script>
+<canvas id="canvas"></canvas>
+<script src="script.js"></script>
 </body>
 
 </html>

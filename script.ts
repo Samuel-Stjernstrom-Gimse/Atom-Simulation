@@ -2,17 +2,17 @@ const canvas = document.getElementById('canvas') as HTMLCanvasElement
 const ctx = canvas.getContext('2d')
 const particles: any[] = []
 
-const p1Count:HTMLInputElement = document.getElementById('input-number1') as HTMLInputElement
-const p2Count:HTMLInputElement = document.getElementById('input-number2') as HTMLInputElement
-const p3Count:HTMLInputElement = document.getElementById('input-number3') as HTMLInputElement
+const p1Count: HTMLInputElement = document.getElementById('input-number1') as HTMLInputElement
+const p2Count: HTMLInputElement = document.getElementById('input-number2') as HTMLInputElement
+const p3Count: HTMLInputElement = document.getElementById('input-number3') as HTMLInputElement
 
-const p1Color:HTMLInputElement = document.getElementById('input-color1') as HTMLInputElement
-const p2Color:HTMLInputElement = document.getElementById('input-color2') as HTMLInputElement
-const p3Color:HTMLInputElement = document.getElementById('input-color3') as HTMLInputElement
+const p1Color: HTMLInputElement = document.getElementById('input-color1') as HTMLInputElement
+const p2Color: HTMLInputElement = document.getElementById('input-color2') as HTMLInputElement
+const p3Color: HTMLInputElement = document.getElementById('input-color3') as HTMLInputElement
 
 const p1p1Button = document.getElementById('particle1-particle1') as HTMLButtonElement
-const p2p2Button = document.getElementById('particle1-particle1') as HTMLButtonElement
-const p3p3Button = document.getElementById('particle1-particle1') as HTMLButtonElement
+const p2p2Button = document.getElementById('particle2-particle2') as HTMLButtonElement
+const p3p3Button = document.getElementById('particle3-particle3') as HTMLButtonElement
 
 let p1p1 = true
 let p2p2 = true
@@ -22,14 +22,9 @@ const p1ForceInput = document.getElementById('particle1-particle1-force') as HTM
 const p2ForceInput = document.getElementById('particle2-particle2-force') as HTMLInputElement
 const p3ForceInput = document.getElementById('particle3-particle3-force') as HTMLInputElement
 
-
-let p2p2a = 10
-let p3p3a = 10
-
-let p1Range = document.getElementById('particle1-particle1-range') as HTMLInputElement
-const p2Range = document.getElementById('particle2-particle2-range') as HTMLInputElement
-const p3Range = document.getElementById('particle2-particle2-range') as HTMLInputElement
-
+const p1RangeInput = document.getElementById('particle1-particle1-range') as HTMLInputElement
+const p2RangeInput = document.getElementById('particle2-particle2-range') as HTMLInputElement
+const p3RangeInput = document.getElementById('particle3-particle3-range') as HTMLInputElement
 
 p1p1Button.addEventListener('click', () => {
 	if (!p1p1) {
@@ -40,44 +35,35 @@ p1p1Button.addEventListener('click', () => {
 })
 
 p2p2Button.addEventListener('click', () => {
-	if (p2p2 === false) {
+	if (!p2p2) {
 		p2p2 = true
-		p2p2a = p2ForceInput.valueAsNumber
-	} else if (p2p2 === true) {
-		p2p2a = -p2ForceInput.valueAsNumber
+	} else if (p2p2) {
 		p2p2 = false
 	}
 })
 
 p3p3Button.addEventListener('click', () => {
-	if (p3p3 === false) {
+	if (!p3p3) {
 		p3p3 = true
-		p3p3a = p3ForceInput.valueAsNumber
-	} else if (p3p3 === true) {
-		p3p3a = -p3ForceInput.valueAsNumber
+	} else if (p3p3) {
 		p3p3 = false
 	}
 })
 
+canvas.width = window.innerWidth
+canvas.height = window.innerHeight
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-function draw(x: number, y: number, c: string, s: number): void {
-	// @ts-ignore
-	ctx.fillStyle = c
-	// @ts-ignore
-	ctx.fillRect(x, y, s, s)
+const draw = (ctx: CanvasRenderingContext2D, x: number, y: number, color: string, size: number): void => {
+	ctx.fillStyle = color
+	ctx.fillRect(x, y, size, size)
 }
 
-function drawParticle(x, y, c, s) {
+function drawParticle(ctx: CanvasRenderingContext2D, x: number, y: number, color: string, size: number) {
 	ctx.beginPath()
-	ctx.arc(x,y,s / 2, 0, 2*Math.PI)
-	ctx.fillStyle = c
+	ctx.arc(x, y, size / 2, 0, 2 * Math.PI)
+	ctx.fillStyle = color
 	ctx.fill()
 }
-
-
 
 const particle = (x: number, y: number, c: string) => {
 	return { x: x, y: y, vx: 0, vy: 0, color: c }
@@ -88,7 +74,7 @@ const random = () => {
 }
 
 const create = (number: number, color: string) => {
-	let group = []
+	let group: any[] = []
 	for (let i = 0; i < number; i++) {
 		group.push(particle(random(), random(), color))
 		particles.push(group[i])
@@ -110,7 +96,7 @@ const rule = (particles1: any, particles2: any, g: number, range: number) => {
 			let d = Math.sqrt(dx * dx + dy * dy)
 			if (d > 0 && d < range) {
 				// range
-				let F = (g * 1) / d
+				let F = g / d
 				fx += (F * dx) / d
 				fy += (F * dy) / d
 			}
@@ -128,62 +114,68 @@ const rule = (particles1: any, particles2: any, g: number, range: number) => {
 	}
 }
 
+let color1 = create(p1Count.valueAsNumber, p1Color.value)
+let color2 = create(p2Count.valueAsNumber, p2Color.value)
+let color3 = create(p3Count.valueAsNumber, p3Color.value)
 
-let red = create()
-let green = create()
-let cyan = create()
 p1Count.addEventListener('keypress', (e) => {
-
 	if (e.key === 'Enter') {
-		red = create(p1Count.valueAsNumber, p1Color.value)
+		color1 = create(p1Count.valueAsNumber, p1Color.value)
 	}
 })
 
 p2Count.addEventListener('keypress', (e) => {
-	if (e.key === 'Enter'){
-		let green = create(p2Count.valueAsNumber, p2Color.value)
+	if (e.key === 'Enter') {
+		color2 = create(p2Count.valueAsNumber, p2Color.value)
 	}
 })
 
 p3Count.addEventListener('keypress', (e) => {
-	if (e.key === 'Enter'){
-		cyan = create(p3Count.valueAsNumber, p3Color.value)
+	if (e.key === 'Enter') {
+		color3 = create(p3Count.valueAsNumber, p3Color.value)
 	}
 })
 
+const update = (ctx: CanvasRenderingContext2D | null): void => {
+	if (ctx === null) return
 
+	let p1Range = p1RangeInput.valueAsNumber ? p1RangeInput.valueAsNumber : 1
+	let p2Range = p2RangeInput.valueAsNumber ? p2RangeInput.valueAsNumber : 1
+	let p3Range = p3RangeInput.valueAsNumber ? p3RangeInput.valueAsNumber : 1
 
-
-const update = () => {
-	let heyo = p1Range.valueAsNumber ? p1Range.valueAsNumber : 1
 	let p1p1a = p1p1 ? p1ForceInput.valueAsNumber : -p1ForceInput.valueAsNumber
+	let p2p2a = p2p2 ? p2ForceInput.valueAsNumber : -p2ForceInput.valueAsNumber
+	let p3p3a = p3p3 ? p3ForceInput.valueAsNumber : -p3ForceInput.valueAsNumber
 
 	if (isNaN(p1p1a)) {
 		p1p1a = 1
 	}
 
+	if (isNaN(p2p2a)) {
+		p2p2a = 1
+	}
 
-	rule(red, red, -2, 12)
-	rule(red, red, p1p1a ? p1p1a : 0.0001, heyo)
+	if (isNaN(p3p3a)) {
+		p3p3a = 1
+	}
 
-	console.log(p1Range.valueAsNumber)
-	console.log(heyo)
+	rule(color1, color1, -2, 15)
+	rule(color1, color1, p1p1a ? p1p1a : 0.0001, p1Range)
 
-	rule(cyan, cyan, -1, 12)
-	rule(cyan, cyan, p2p2a ? p2p2a : 1, 200)
+	rule(color2, color2, -2, 15)
+	rule(color2, color2, p2p2a ? p2p2a : 0.0001, p2Range)
 
-	rule(green, green, -1, 12)
-	rule(green, green, p3p3a, p3Range.valueAsNumber)
+	rule(color3, color3, -2, 15)
+	rule(color3, color3, p3p3a ? p3p3a : 0.0001, p3Range)
 
-	rule(red, cyan, -0.22, 40)
-	rule(red, green, -0.22, 40)
+	rule(color1, color3, -0.22, 40)
+	rule(color1, color2, -0.22, 40)
 
-	rule(cyan, red, -0.22, 40)
-	rule(cyan, green, -0.22, 40)
+	rule(color3, color1, 10.22, 40)
+	rule(color3, color2, -0.22, 40)
 
-	rule(green, red, -0.22, 40)
-	rule(green, cyan, -0.22, 40)
-
+	rule(color2, color1, -0.22, 40)
+	rule(color2, color3, -0.22, 40)
 
 	//own design
 	/*	rule(red, red, 0.8, 100)
@@ -197,20 +189,20 @@ const update = () => {
         rule(blue, red, -3.5, 34)
         rule(blue, blue, -3.5, 10)*/
 
-	// @ts-ignore
 	ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-	draw(0, 0, 'rgb(0,0,0)', canvas.width) //rect
+	draw(ctx, 0, 0, 'rgb(0,0,0)', canvas.width) //rect
 
 	for (let i = 0; i < particles.length; i++) {
-		drawParticle(particles[i].x, particles[i].y, particles[i].color, 10)
+		drawParticle(ctx, particles[i].x, particles[i].y, particles[i].color, 10)
 	}
 
-	/*requestAnimationFrame(update)*/
+	requestAnimationFrame(() => update(ctx))
 }
 
-setInterval(update, 36)
+update(ctx)
+
 window.addEventListener('resize', () => {
-	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight;
-});
+	canvas.width = window.innerWidth
+	canvas.height = window.innerHeight
+})
