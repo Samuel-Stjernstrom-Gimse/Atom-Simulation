@@ -50,12 +50,24 @@ const draw = (ctx, x, y, color, size) => {
     ctx.fillStyle = color;
     ctx.fillRect(x, y, size, size);
 };
-function drawParticle(ctx, x, y, color, size) {
+const drawParticle = (ctx, x, y, color, size) => {
+    const glowColors = ['#ffffff', '#000000', '#ffffff', color];
+    const gradient = ctx.createRadialGradient(x, y, 0, x, y, size * 2);
+    gradient.addColorStop(0, color);
+    gradient.addColorStop(1, 'transparent');
+    for (let i = 0; i < glowColors.length; i++) {
+        ctx.beginPath();
+        ctx.arc(x, y, size / 2 + i * 5, 0, 2 * Math.PI);
+        ctx.fillStyle = gradient;
+        ctx.globalAlpha = 1000;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+    }
     ctx.beginPath();
     ctx.arc(x, y, size / 2, 0, 2 * Math.PI);
     ctx.fillStyle = color;
     ctx.fill();
-}
+};
 const particle = (x, y, c) => {
     return { x: x, y: y, vx: 0, vy: 0, color: c };
 };
@@ -98,58 +110,47 @@ const rule = (particles1, particles2, g, range) => {
         }
     }
 };
-let color1 = create(p1Count.valueAsNumber, p1Color.value);
-let color2 = create(p2Count.valueAsNumber, p2Color.value);
-let color3 = create(p3Count.valueAsNumber, p3Color.value);
+let particle1 = create(p1Count.valueAsNumber, p1Color.value);
+let particle2 = create(p2Count.valueAsNumber, p2Color.value);
+let particle3 = create(p3Count.valueAsNumber, p3Color.value);
 p1Count.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
-        color1 = create(p1Count.valueAsNumber, p1Color.value);
+        particle1 = create(p1Count.valueAsNumber, p1Color.value);
     }
 });
 p2Count.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
-        color2 = create(p2Count.valueAsNumber, p2Color.value);
+        particle2 = create(p2Count.valueAsNumber, p2Color.value);
     }
 });
 p3Count.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
-        color3 = create(p3Count.valueAsNumber, p3Color.value);
+        particle3 = create(p3Count.valueAsNumber, p3Color.value);
     }
 });
 const update = (ctx) => {
-    if (ctx === null)
+    if (ctx === null) {
         return;
-    let p1Range = p1RangeInput.valueAsNumber ? p1RangeInput.valueAsNumber : 1;
-    let p2Range = p2RangeInput.valueAsNumber ? p2RangeInput.valueAsNumber : 1;
-    let p3Range = p3RangeInput.valueAsNumber ? p3RangeInput.valueAsNumber : 1;
+    }
     let p1p1a = p1p1 ? p1ForceInput.valueAsNumber : -p1ForceInput.valueAsNumber;
     let p2p2a = p2p2 ? p2ForceInput.valueAsNumber : -p2ForceInput.valueAsNumber;
     let p3p3a = p3p3 ? p3ForceInput.valueAsNumber : -p3ForceInput.valueAsNumber;
-    if (isNaN(p1p1a)) {
-        p1p1a = 1;
-    }
-    if (isNaN(p2p2a)) {
-        p2p2a = 1;
-    }
-    if (isNaN(p3p3a)) {
-        p3p3a = 1;
-    }
-    rule(color1, color1, -2, 15);
-    rule(color1, color1, p1p1a ? p1p1a : 0.0001, p1Range);
-    rule(color2, color2, -2, 15);
-    rule(color2, color2, p2p2a ? p2p2a : 0.0001, p2Range);
-    rule(color3, color3, -2, 15);
-    rule(color3, color3, p3p3a ? p3p3a : 0.0001, p3Range);
-    rule(color1, color3, -0.22, 40);
-    rule(color1, color2, -0.22, 40);
-    rule(color3, color1, 10.22, 40);
-    rule(color3, color2, -0.22, 40);
-    rule(color2, color1, -0.22, 40);
-    rule(color2, color3, -0.22, 40);
+    rule(particle1, particle1, -2, 12);
+    rule(particle1, particle1, p1p1a ? p1p1a : 1, p1RangeInput.valueAsNumber);
+    rule(particle2, particle2, -2, 12);
+    rule(particle2, particle2, p2p2a ? p2p2a : 1, p2RangeInput.valueAsNumber);
+    rule(particle3, particle3, -2, 12);
+    rule(particle3, particle3, p3p3a ? p3p3a : 1, p3RangeInput.valueAsNumber);
+    rule(particle1, particle3, -0.22, 40);
+    rule(particle1, particle2, -0.22, 40);
+    rule(particle3, particle1, -0.22, 40);
+    rule(particle3, particle2, -0.22, 40);
+    rule(particle2, particle1, -0.22, 40);
+    rule(particle2, particle3, -0.22, 40);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     draw(ctx, 0, 0, 'rgb(0,0,0)', canvas.width);
     for (let i = 0; i < particles.length; i++) {
-        drawParticle(ctx, particles[i].x, particles[i].y, particles[i].color, 10);
+        drawParticle(ctx, particles[i].x, particles[i].y, particles[i].color, 3);
     }
     requestAnimationFrame(() => update(ctx));
 };
