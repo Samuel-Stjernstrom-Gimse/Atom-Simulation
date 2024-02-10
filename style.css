@@ -7,3 +7,13 @@
 ::-webkit-scrollbar {
     display: none;
 }
+
+#menu {
+    position: fixed;
+    width: 200px;
+    color: greenyellow;
+    font-size: 10px;
+    display: flex;
+    flex-direction: row;
+    background-color: gray;
+}
