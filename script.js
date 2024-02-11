@@ -132,18 +132,6 @@ const draw = (ctx, x, y, color, size) => {
     ctx.fillRect(x, y, size, size);
 };
 const drawParticle = (ctx, x, y, color, size) => {
-    const glowColors = ['#ffffff', '#000000', '#ffffff', color];
-    const gradient = ctx.createRadialGradient(x, y, 0, x, y, size * 2);
-    gradient.addColorStop(0, color);
-    gradient.addColorStop(1, 'transparent');
-    for (let i = 0; i < glowColors.length; i++) {
-        ctx.beginPath();
-        ctx.arc(x, y, size / 2 + i * 5, 0, 2 * Math.PI);
-        ctx.fillStyle = gradient;
-        ctx.globalAlpha = 1000;
-        ctx.fill();
-        ctx.globalAlpha = 1;
-    }
     ctx.beginPath();
     ctx.arc(x, y, size / 2, 0, 2 * Math.PI);
     ctx.fillStyle = color;

@@ -149,24 +149,6 @@ const draw = (ctx: CanvasRenderingContext2D, x: number, y: number, color: string
 }
 
 const drawParticle = (ctx: CanvasRenderingContext2D, x: number, y: number, color: string, size: number) => {
-	// Define glow colors
-	const glowColors = ['#ffffff', '#000000', '#ffffff', color] // Customize glow colors here
-
-	// Define the gradient
-	const gradient = ctx.createRadialGradient(x, y, 0, x, y, size * 2)
-	gradient.addColorStop(0, color)
-	gradient.addColorStop(1, 'transparent')
-
-	// Draw semi-transparent circles with increasing radii for the glow effect
-	for (let i = 0; i < glowColors.length; i++) {
-		ctx.beginPath()
-		ctx.arc(x, y, size / 2 + i * 5, 0, 2 * Math.PI)
-		ctx.fillStyle = gradient
-		ctx.globalAlpha = 1000 // Adjust glow intensity by changing alpha value
-		ctx.fill()
-		ctx.globalAlpha = 1 // Reset alpha
-	}
-
 	// Draw the main circle
 	ctx.beginPath()
 	ctx.arc(x, y, size / 2, 0, 2 * Math.PI)
