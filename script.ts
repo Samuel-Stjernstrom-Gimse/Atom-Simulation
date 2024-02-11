@@ -1,6 +1,11 @@
 const canvas = document.getElementById('canvas') as HTMLCanvasElement
 const ctx = canvas.getContext('2d')
 const particles: any[] = []
+const powerConstant: number = 50
+const rangeConstant: number = 4
+const shoeMenu = document.getElementById('show-menu') as HTMLButtonElement
+const menu = document.getElementById('menu') as HTMLDivElement
+let menuBol = false
 
 const p1Count: HTMLInputElement = document.getElementById('input-number1') as HTMLInputElement
 const p2Count: HTMLInputElement = document.getElementById('input-number2') as HTMLInputElement
@@ -14,9 +19,41 @@ const p1p1Button = document.getElementById('particle1-particle1') as HTMLButtonE
 const p2p2Button = document.getElementById('particle2-particle2') as HTMLButtonElement
 const p3p3Button = document.getElementById('particle3-particle3') as HTMLButtonElement
 
+const p1p2Button = document.getElementById('particle1-particle2-attract') as HTMLInputElement
+const p1p2Force = document.getElementById('particle1-particle2-force') as HTMLInputElement
+const p1p2Range = document.getElementById('particle1-particle2-range') as HTMLInputElement
+
+const p1p3Button = document.getElementById('particle1-particle3-attract') as HTMLInputElement
+const p1p3Force = document.getElementById('particle1-particle3-force') as HTMLInputElement
+const p1p3Range = document.getElementById('particle1-particle3-range') as HTMLInputElement
+
+const p2p1Button = document.getElementById('particle2-particle1-attract') as HTMLInputElement
+const p2p1Force = document.getElementById('particle2-particle1-force') as HTMLInputElement
+const p2p1Range = document.getElementById('particle2-particle1-range') as HTMLInputElement
+
+const p2p3Button = document.getElementById('particle2-particle3-attract') as HTMLInputElement
+const p2p3Force = document.getElementById('particle2-particle3-force') as HTMLInputElement
+const p2p3Range = document.getElementById('particle2-particle3-range') as HTMLInputElement
+
+const p3p1Button = document.getElementById('particle3-particle1-attract') as HTMLInputElement
+const p3p1Force = document.getElementById('particle3-particle1-force') as HTMLInputElement
+const p3p1Range = document.getElementById('particle3-particle1-range') as HTMLInputElement
+
+const p3p2Button = document.getElementById('particle3-particle2-attract') as HTMLInputElement
+const p3p2Force = document.getElementById('particle3-particle2-force') as HTMLInputElement
+const p3p2Range = document.getElementById('particle3-particle2-range') as HTMLInputElement
+
 let p1p1 = true
+let p1p2 = true
+let p1p3 = true
+
 let p2p2 = true
+let p2p1 = true
+let p2p3 = true
+
 let p3p3 = true
+let p3p1 = true
+let p3p2 = true
 
 const p1ForceInput = document.getElementById('particle1-particle1-force') as HTMLInputElement
 const p2ForceInput = document.getElementById('particle2-particle2-force') as HTMLInputElement
@@ -26,11 +63,32 @@ const p1RangeInput = document.getElementById('particle1-particle1-range') as HTM
 const p2RangeInput = document.getElementById('particle2-particle2-range') as HTMLInputElement
 const p3RangeInput = document.getElementById('particle3-particle3-range') as HTMLInputElement
 
+shoeMenu.addEventListener('click', () => {
+	menuBol = !menuBol
+	menuBol ? (menu.style.visibility = 'visible') : (menu.style.visibility = 'hidden')
+})
+
 p1p1Button.addEventListener('click', () => {
 	if (!p1p1) {
 		p1p1 = true
 	} else if (p1p1) {
 		p1p1 = false
+	}
+})
+
+p1p2Button.addEventListener('click', () => {
+	if (!p1p2) {
+		p1p2 = true
+	} else if (p1p2) {
+		p1p2 = false
+	}
+})
+
+p1p3Button.addEventListener('click', () => {
+	if (!p1p3) {
+		p1p3 = true
+	} else if (p1p3) {
+		p1p3 = false
 	}
 })
 
@@ -42,11 +100,43 @@ p2p2Button.addEventListener('click', () => {
 	}
 })
 
+p2p1Button.addEventListener('click', () => {
+	if (!p2p1) {
+		p2p1 = true
+	} else if (p2p1) {
+		p2p1 = false
+	}
+})
+
+p2p3Button.addEventListener('click', () => {
+	if (!p2p3) {
+		p2p3 = true
+	} else if (p2p3) {
+		p2p3 = false
+	}
+})
+
 p3p3Button.addEventListener('click', () => {
 	if (!p3p3) {
 		p3p3 = true
 	} else if (p3p3) {
 		p3p3 = false
+	}
+})
+
+p3p1Button.addEventListener('click', () => {
+	if (!p3p1) {
+		p3p1 = true
+	} else if (p3p1) {
+		p3p1 = false
+	}
+})
+
+p3p2Button.addEventListener('click', () => {
+	if (!p3p2) {
+		p3p2 = true
+	} else if (p3p2) {
+		p3p2 = false
 	}
 })
 
@@ -161,33 +251,51 @@ const update = (ctx: CanvasRenderingContext2D | null) => {
 	}
 
 	let p1p1a = p1p1 ? p1ForceInput.valueAsNumber : -p1ForceInput.valueAsNumber
+	let p1p2a = p1p2 ? p1p2Force.valueAsNumber : -p1p2Force.valueAsNumber
+	let p1p3a = p1p3 ? p1p3Force.valueAsNumber : -p1p3Force.valueAsNumber
+
 	let p2p2a = p2p2 ? p2ForceInput.valueAsNumber : -p2ForceInput.valueAsNumber
+	let p2p1a = p2p1 ? p2p1Force.valueAsNumber : -p2p1Force.valueAsNumber
+	let p2p3a = p2p3 ? p2p3Force.valueAsNumber : -p2p3Force.valueAsNumber
+
 	let p3p3a = p3p3 ? p3ForceInput.valueAsNumber : -p3ForceInput.valueAsNumber
+	let p3p1a = p3p3 ? p3p1Force.valueAsNumber : -p3p1Force.valueAsNumber
+	let p3p2a = p3p3 ? p3p2Force.valueAsNumber : -p3p2Force.valueAsNumber
 
 	rule(particle1, particle1, -2, 12)
-	rule(particle1, particle1, p1p1a ? p1p1a : 1, p1RangeInput.valueAsNumber)
+	rule(particle1, particle1, p1p1a / powerConstant, p1RangeInput.valueAsNumber * rangeConstant)
 
 	rule(particle2, particle2, -2, 12)
-	rule(particle2, particle2, p2p2a ? p2p2a : 1, p2RangeInput.valueAsNumber)
+	rule(particle2, particle2, p2p2a / powerConstant, p2RangeInput.valueAsNumber * rangeConstant)
 
 	rule(particle3, particle3, -2, 12)
-	rule(particle3, particle3, p3p3a ? p3p3a : 1, p3RangeInput.valueAsNumber)
+	rule(particle3, particle3, p3p3a / powerConstant, p3RangeInput.valueAsNumber * rangeConstant)
 
-	rule(particle1, particle3, -0.22, 40)
-	rule(particle1, particle2, -0.22, 40)
+	rule(particle1, particle3, p1p3a / powerConstant, p1p3Range.valueAsNumber * rangeConstant)
+	rule(particle1, particle2, p1p2a / powerConstant, p1p2Range.valueAsNumber * rangeConstant)
 
-	rule(particle3, particle1, -0.22, 40)
-	rule(particle3, particle2, -0.22, 40)
+	rule(particle3, particle1, p3p1a / powerConstant, p3p1Range.valueAsNumber * rangeConstant)
+	rule(particle3, particle2, p3p2a / powerConstant, p3p2Range.valueAsNumber * rangeConstant)
 
-	rule(particle2, particle1, -0.22, 40)
-	rule(particle2, particle3, -0.22, 40)
+	rule(particle2, particle1, p2p1a / powerConstant, p2p1Range.valueAsNumber * rangeConstant)
+	rule(particle2, particle3, p2p3a / powerConstant, p2p3Range.valueAsNumber * rangeConstant)
+
+	// BASIC RESISTANCE
+	rule(particle1, particle3, -1, 20)
+	rule(particle1, particle2, -1, 20)
+
+	rule(particle3, particle1, -1, 20)
+	rule(particle3, particle2, -1, 20)
+
+	rule(particle2, particle1, -1, 20)
+	rule(particle2, particle3, -1, 20)
 
 	ctx.clearRect(0, 0, canvas.width, canvas.height)
 
 	draw(ctx, 0, 0, 'rgb(0,0,0)', canvas.width)
 
 	for (let i = 0; i < particles.length; i++) {
-		drawParticle(ctx, particles[i].x, particles[i].y, particles[i].color, 3)
+		drawParticle(ctx, particles[i].x, particles[i].y, particles[i].color, 5)
 	}
 
 	requestAnimationFrame(() => update(ctx))

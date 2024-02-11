@@ -1,7 +1,7 @@
 * {
     overflow: hidden;
     margin: 0;
-    image-rendering: pixelated;
+    image-rendering: auto;
 }
 
 ::-webkit-scrollbar {
@@ -9,13 +9,18 @@
 }
 
 #menu {
+    visibility: hidden;
     position: fixed;
-    width: 300px;
+    width: 500px;
     color: greenyellow;
     font-size: 10px;
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: row;
     background-color: gray;
+    border-radius: 30px;
+    opacity: 0.9;
 }
 
 /* The switch - the box around the slider */
@@ -83,4 +88,47 @@ input:checked + .slider:before {
 
 .input-range {
     width: 100px;
+}
+
+div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    color: white;
+    font-size: 14px;
+}
+
+h2 {
+    font-size: 13px;
+    font-family: Arial;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 3px;
+}
+
+.particle-container {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    padding: 30px;
+    justify-content: center;
+    text-align: center;
+}
+
+#particle1c {
+    background-color: darkcyan;
+}
+
+#particle3c{
+    background-color: #15b0b0;
+}
+#show-menu {
+    position: fixed;
+    bottom: 5%;
+    right: 2%;
+    background-color: gray;
+    font-family: Arial;
+    border: none;
+    color: #f4f4f4;
+    font-size: 25px;
 }
