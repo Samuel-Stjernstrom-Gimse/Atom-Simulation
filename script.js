@@ -167,8 +167,8 @@ const rule = (particles1, particles2, g, range) => {
                 fy += (F * dy) / d;
             }
         }
-        a.vx = (a.vx + fx) * 0.3;
-        a.vy = (a.vy + fy) * 0.3;
+        a.vx = (a.vx + fx) * 0.4;
+        a.vy = (a.vy + fy) * 0.4;
         a.x += a.vx;
         a.y += a.vy;
         if (a.x <= 0 || a.x >= canvas.width) {
@@ -233,9 +233,8 @@ const update = (ctx) => {
     for (let i = 0; i < particles.length; i++) {
         drawParticle(ctx, particles[i].x, particles[i].y, particles[i].color, 3);
     }
-    requestAnimationFrame(() => update(ctx));
 };
-update(ctx);
+setInterval(update, 25, ctx);
 window.addEventListener('resize', () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;

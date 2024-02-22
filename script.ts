@@ -192,8 +192,8 @@ const rule = (particles1: any, particles2: any, g: number, range: number) => {
 				fy += (F * dy) / d
 			}
 		}
-		a.vx = (a.vx + fx) * 0.3
-		a.vy = (a.vy + fy) * 0.3
+		a.vx = (a.vx + fx) * 0.4
+		a.vy = (a.vy + fy) * 0.4
 		a.x += a.vx
 		a.y += a.vy
 		if (a.x <= 0 || a.x >= canvas.width) {
@@ -280,9 +280,10 @@ const update = (ctx: CanvasRenderingContext2D | null) => {
 		drawParticle(ctx, particles[i].x, particles[i].y, particles[i].color, 3)
 	}
 
-	requestAnimationFrame(() => update(ctx))
+	/*	requestAnimationFrame(() => update(ctx))*/
 }
-update(ctx)
+/*update(ctx)*/
+setInterval(update, 25, ctx)
 
 window.addEventListener('resize', () => {
 	canvas.width = window.innerWidth
