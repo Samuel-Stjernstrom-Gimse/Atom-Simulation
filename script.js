@@ -127,9 +127,9 @@ p3p2Button.addEventListener('click', () => {
 });
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-const draw = (ctx, x, y, color, size) => {
+const draw = (ctx, x, y, color, size, sizey) => {
     ctx.fillStyle = color;
-    ctx.fillRect(x, y, size, size);
+    ctx.fillRect(x, y, size, sizey);
 };
 const drawParticle = (ctx, x, y, color, size) => {
     ctx.beginPath();
@@ -229,7 +229,7 @@ const update = (ctx) => {
     rule(particle2, particle1, -1, 20);
     rule(particle2, particle3, -1, 20);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    draw(ctx, 0, 0, 'rgb(0,0,0)', canvas.width);
+    draw(ctx, 0, 0, 'rgb(0,0,0)', canvas.width, canvas.height);
     for (let i = 0; i < particles.length; i++) {
         drawParticle(ctx, particles[i].x, particles[i].y, particles[i].color, 3);
     }

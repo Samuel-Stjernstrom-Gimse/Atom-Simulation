@@ -143,9 +143,16 @@ p3p2Button.addEventListener('click', () => {
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 
-const draw = (ctx: CanvasRenderingContext2D, x: number, y: number, color: string, size: number): void => {
+const draw = (
+	ctx: CanvasRenderingContext2D,
+	x: number,
+	y: number,
+	color: string,
+	size: number,
+	sizey: number
+): void => {
 	ctx.fillStyle = color
-	ctx.fillRect(x, y, size, size)
+	ctx.fillRect(x, y, size, sizey)
 }
 
 const drawParticle = (ctx: CanvasRenderingContext2D, x: number, y: number, color: string, size: number) => {
@@ -274,7 +281,7 @@ const update = (ctx: CanvasRenderingContext2D | null) => {
 
 	ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-	draw(ctx, 0, 0, 'rgb(0,0,0)', canvas.width)
+	draw(ctx, 0, 0, 'rgb(0,0,0)', canvas.width, canvas.height)
 
 	for (let i = 0; i < particles.length; i++) {
 		drawParticle(ctx, particles[i].x, particles[i].y, particles[i].color, 3)
